@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://code.alibabatech.com/schema/dubbo
+       http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+
+    <dubbo:application name="dubbo01-consume"></dubbo:application>
+
+    <dubbo:registry address="zookeeper://127.0.0.1:2181" check="false"></dubbo:registry>
+
+    <!--如果是dubbo协议，port就是netty的绑定端口。 端口不指定的情况下是20880-->
+    <dubbo:protocol id="dubbo" port="29015"> </dubbo:protocol>
+    
+    <dubbo:reference group="member" interface="com.dubbo.UserService" id="userService"></dubbo:reference>
+    
+    <dubbo:parameter key="hash.arguments" value="0,1"></dubbo:parameter>
+    <dubbo:parameter key="hash.nodes" value="320"></dubbo:parameter>
+    <dubbo:protocol name="dubbo" dispatcher="all" threadpool="fix" threads="100"></dubbo:protocol>
+</beans>
